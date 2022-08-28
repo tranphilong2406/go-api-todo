@@ -68,14 +68,33 @@ func EditTodo(c echo.Context) (e error) {
 
 	todo.ID = id
 
-	for i, v := range data.Todos {
+	for _, v := range data.Todos {
 		if v.ID == id {
-			data.Todos[i] = *todo
+			v = *todo
 			return c.String(http.StatusOK, "Sua thanh cong !")
 		}
 	}
 	return c.String(http.StatusNotFound, "Khong the tim thay id nay!")
 
+}
+
+func CheckDone(c echo.Context) error {
+
+	param := c.Param("id")
+
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		return c.String(http.StatusOK, "Sai kieu du lieu!")
+	}
+
+	for _, v := range data.Todos {
+		if v.ID == id {
+			v.IsDone = true
+			return c.String(http.StatusOK, "done!")
+		}
+	}
+
+	return c.String(http.StatusNotFound, "Khong tim thay id nay!")
 }
 
 func DeleteTodo(c echo.Context) error {
