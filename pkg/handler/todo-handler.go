@@ -78,25 +78,6 @@ func EditTodo(c echo.Context) (e error) {
 
 }
 
-func CheckDone(c echo.Context) error {
-
-	param := c.Param("id")
-
-	id, err := strconv.Atoi(param)
-	if err != nil {
-		return c.String(http.StatusOK, "Sai kieu du lieu!")
-	}
-
-	for _, v := range data.Todos {
-		if v.ID == id {
-			v.IsDone = true
-			return c.String(http.StatusOK, "done!")
-		}
-	}
-
-	return c.String(http.StatusNotFound, "Khong tim thay id nay!")
-}
-
 func DeleteTodo(c echo.Context) error {
 	param := c.Param("id")
 
@@ -124,6 +105,5 @@ func AutoID(todos []dto.TODO) int {
 			id = v.ID
 		}
 	}
-
 	return id + 1
 }
