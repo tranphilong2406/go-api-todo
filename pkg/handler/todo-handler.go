@@ -66,11 +66,9 @@ func EditTodo(c echo.Context) (e error) {
 		return
 	}
 
-	todo.ID = id
-
-	for _, v := range data.Todos {
+	for i, v := range data.Todos {
 		if v.ID == id {
-			v = *todo
+			data.Todos[i].Name = todo.Name
 			return c.String(http.StatusOK, "Sua thanh cong !")
 		}
 	}
@@ -95,6 +93,24 @@ func DeleteTodo(c echo.Context) error {
 	}
 	return c.String(http.StatusNotFound, "Khong the tim thay id nay!")
 
+}
+
+func CheckTodo(c echo.Context) error {
+	param := c.Param("id")
+
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "Sai kieu du lieu!")
+	}
+
+	for i, v := range data.Todos {
+		if v.ID == id {
+			data.Todos[i].IsDone = true
+			return c.String(http.StatusOK, "Cap nhat thanh cong!")
+		}
+	}
+
+	return c.String(http.StatusNotFound, "Khong tim thay id nay!")
 }
 
 func AutoID(todos []dto.TODO) int {

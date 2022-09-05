@@ -18,5 +18,7 @@ func main() {
 
 	e.PUT("/todo/:id", handler.EditTodo)
 
+	e.PUT("/check/:id", handler.CheckTodo)
+
 	e.Logger.Fatal(e.Start(":3000"))
 }
