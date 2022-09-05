@@ -49,7 +49,7 @@ func CreateTodo(c echo.Context) (err error) {
 
 	data.Todos = append(data.Todos, todo)
 
-	return c.String(http.StatusOK, "Them thanh cong!")
+	return echo.NewHTTPError(http.StatusOK, "Them thanh cong!")
 }
 
 func EditTodo(c echo.Context) (e error) {
@@ -72,7 +72,7 @@ func EditTodo(c echo.Context) (e error) {
 			return c.String(http.StatusOK, "Sua thanh cong !")
 		}
 	}
-	return c.String(http.StatusNotFound, "Khong the tim thay id nay!")
+	return echo.NewHTTPError(http.StatusNotFound, "Khong the tim thay id nay!")
 
 }
 
@@ -91,7 +91,7 @@ func DeleteTodo(c echo.Context) error {
 			return c.String(http.StatusOK, "Xoa thanh cong!")
 		}
 	}
-	return c.String(http.StatusNotFound, "Khong the tim thay id nay!")
+	return echo.NewHTTPError(http.StatusNotFound, "Khong the tim thay id nay!")
 
 }
 
@@ -110,7 +110,7 @@ func CheckTodo(c echo.Context) error {
 		}
 	}
 
-	return c.String(http.StatusNotFound, "Khong tim thay id nay!")
+	return echo.NewHTTPError(http.StatusNotFound, "Khong tim thay id nay!")
 }
 
 func AutoID(todos []dto.TODO) int {
